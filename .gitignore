@@ -1,0 +1,12 @@
+settings.local.json
+session-env/
+sessions/
+telemetry/
+shell-snapshots/
+ide/
+file-history/
+backups/
+*.log
+.env
+node_modules/
+skills/gstack/bin/*.exe
