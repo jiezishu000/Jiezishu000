@@ -1,0 +1,113 @@
+# ==========================================
+# 暗网帝国数字考古矿机 - 核心配置
+# ==========================================
+
+# ---------- 网络代理 (国内环境) ----------
+network:
+  proxy: null  # 如需代理填 http://127.0.0.1:7890
+  timeout: 30
+  retry: 3
+
+# ---------- GitHub扫描模块 ----------
+github:
+  enabled: true
+  # GitHub API Token (必填 - 去 github.com/settings/tokens 生成)
+  # 不需要任何权限，只用来提高API限额 (无token: 60次/时, 有token: 5000次/时)
+  token: ""
+  # 扫描关键词列表
+  keywords:
+    - "private_key"
+    - "mnemonic"
+    - "secret_key"
+    - "api_key"
+    - "rpc_url"
+    - "infura"
+    - "alchemy"
+    - "moralis"
+    - "etherscan_api"
+    - "bscscan_api"
+    - "polygonscan_api"
+    - "aws_access_key"
+    - "aws_secret"
+    - "OPENAI_API_KEY"
+    - "ANTHROPIC_API_KEY"
+    - "password"
+    - "passphrase"
+    - "keystore"
+    - "seed phrase"
+    - "助记词"
+    - "私钥"
+    - "PRIVATE_KEY"
+    - "MAINNET_RPC"
+    - "DEPLOYER_KEY"
+    - "OWNER_KEY"
+  # 每轮扫描最大仓库数
+  max_repos_per_scan: 50
+  # 最小stars (过滤噪音)
+  min_stars: 0
+
+# ---------- 链上合约检漏模块 ----------
+chain:
+  enabled: true
+  # 监控的链 (RPC端点使用国内可通的公共节点)
+  chains:
+    ethereum:
+      rpc: "https://eth.llamarpc.com"
+      explorer: "https://api.etherscan.io/api"
+    bsc:
+      rpc: "https://bsc-dataseed1.binance.org"
+      explorer: "https://api.bscscan.com/api"
+    polygon:
+      rpc: "https://polygon.llamarpc.com"
+      explorer: "https://api.polygonscan.com/api"
+    arbitrum:
+      rpc: "https://arb1.arbitrum.io/rpc"
+      explorer: "https://api.arbiscan.io/api"
+  # 检漏参数
+  min_eth_balance: 0.01        # 最少ETH余额才告警
+  min_token_value_usd: 100     # 最少代币价值才告警
+  check_interval_minutes: 30   # 检查间隔
+
+# ---------- 域名遗产监控 ----------
+domain:
+  enabled: true
+  # 监控的TLD
+  tlds:
+    - .com
+    - .io
+    - .ai
+    - .xyz
+    - .org
+    - .net
+  # 高价值关键词
+  keywords:
+    - "defi"
+    - "swap"
+    - "chain"
+    - "protocol"
+    - "nft"
+    - "token"
+    - "crypto"
+    - "web3"
+    - "meta"
+    - "dao"
+  # 到期前多少天提醒
+  expire_days_before: 7
+
+# ---------- 日志与通知 ----------
+output:
+  log_level: INFO           # DEBUG/INFO/WARNING/ERROR
+  log_file: data/miner.log
+  report_file: data/discoveries.json  # 发现记录
+  db_file: data/empire.db             # SQLite数据库
+  # Telegram通知 (可选)
+  telegram:
+    enabled: false
+    bot_token: ""
+    chat_id: ""
+
+# ---------- 调度 ----------
+scheduler:
+  github_scan_interval_hours: 2
+  chain_scan_interval_minutes: 30
+  domain_scan_interval_hours: 6

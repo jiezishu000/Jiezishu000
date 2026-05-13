@@ -1,0 +1,9 @@
+# 暗网帝国矿机 - Git忽略
+data/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+*.egg-info/
+dist/
+build/
